@@ -31,27 +31,27 @@ const [user,setUser]=useState(null)
   
   const googleProvider=new GoogleAuthProvider()
 const loginUser=async()=>{
-  return await signInWithPopup(auth,googleProvider)
+  return await signInWithPopup(auth,googleProvider).then((data)=>setUser(data.user))
 }
 const logoutUser=async()=>{
   setUser(null);
-  await signOut()
+  await signOut(auth)
 }
-useEffect(()=>{
-  const unsubscribe = onAuthStateChanged(auth,(user)=>{
-    if (user) {
-      setUser({
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-      });
-    } else {
-      setUser(null);
-    }
+// useEffect(()=>{
+//   const unsubscribe = onAuthStateChanged(auth,(user)=>{
+//     if (user) {
+//       setUser({
+//         uid: user.uid,
+//         email: user.email,
+//         displayName: user.displayName,
+//       });
+//     } else {
+//       setUser(null);
+//     }
     
-  });
-  return unsubscribe();
-  }, [])
+//   });
+//   return unsubscribe();
+//   }, [])
 
 console.log(user)
   const adultsQuantity = useSelector((state) => state.counter.value);
